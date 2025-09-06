@@ -43,13 +43,12 @@ jobs:
           ./gradlew --version
           ./gradlew build --no-daemon --stacktrace
 
-      # Windows (use cmd so gradlew.bat runs reliably)
       - name: Build with Gradle (Windows)
         if: runner.os == 'Windows'
-        shell: cmd
+        shell: pwsh
         run: |
-          dir
-          dir gradle\wrapper
-          gradlew --version
-          gradlew build --no-daemon --stacktrace
+          Get-ChildItem -Force
+          Get-ChildItem gradle/wrapper -Force
+          .\gradlew.bat --version
+          .\gradlew.bat build --no-daemon --stacktrace
 
