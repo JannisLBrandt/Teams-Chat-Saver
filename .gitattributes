@@ -1,0 +1,28 @@
+#
+# https://help.github.com/articles/dealing-with-line-endings/
+#
+# Defaults
+* text=auto
+
+# Script Files
+*.sh text eof=lf
+gradlew text eol=lf
+
+# Batch/Powershell
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Markdown + Coding
+*.md text eol=lf
+*.java text eol=lf
+*.kt text eol=lf
+*.gradle text eol=lf
+gradle-wrapper.properties text eol=lf
+
+# Binaries
+*.jar binary
+*.png binary
+*.jpg binary
+*.zip binary
+
