@@ -43,12 +43,18 @@ jobs:
           ./gradlew --version
           ./gradlew build --no-daemon --stacktrace
 
+      - name: Show wrapper files (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          Get-Location
+          Get-ChildItem -Force
+          Get-ChildItem gradle/wrapper -Force
+      
       - name: Build with Gradle (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          Get-ChildItem -Force
-          Get-ChildItem gradle/wrapper -Force
           .\gradlew.bat --version
           .\gradlew.bat build --no-daemon --stacktrace
-
+       
