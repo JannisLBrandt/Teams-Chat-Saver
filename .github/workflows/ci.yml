@@ -24,14 +24,32 @@ jobs:
           distribution: temurin
           cache: gradle
 
+      # Show where we are + prove the wrapper files exist
+      - name: Show wrapper files
+        run: |
+          pwd || cd
+          ls -la
+          ls -la gradle || true
+          ls -la gradle/wrapper || true
+
+      # Unix (Linux/macOS)
       - name: Ensure gradlew is executable (Unix)
         if: runner.os != 'Windows'
         run: chmod +x gradlew
 
       - name: Build with Gradle (Unix)
         if: runner.os != 'Windows'
-        run: ./gradlew build
+        run: |
+          ./gradlew --version
+          ./gradlew build --no-daemon --stacktrace
 
+      # Windows (use cmd so gradlew.bat runs reliably)
       - name: Build with Gradle (Windows)
         if: runner.os == 'Windows'
-        run: gradlew build
+        shell: cmd
+        run: |
+          dir
+          dir gradle\wrapper
+          gradlew --version
+          gradlew build --no-daemon --stacktrace
+
