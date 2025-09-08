@@ -26,7 +26,6 @@ Thumbs.db
 .env*
 
 # Organisation File
-*.org
 
 # IDE
 .project 
