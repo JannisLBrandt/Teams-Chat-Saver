@@ -1,0 +1,36 @@
+#+TITLE: Project Teams-Chat-Saver Notes
+#+AUTHOR: Jannis Brandt
+
+* <2025-09-08 Mon> Meeting
+
+** Overview
+- desktop application exporting single Microssoft Teams chats
+
+** Questions
+- API limited to 250 messages per request, how many continous requests possible?
+- Costs for API?
+- Admin rights necessary?
+- private Teams accounts?
+
+** Planning
+
+iteration 1:
+- only chats, files are expected to be pre downloaded by each user
+
+1. API calls
+
+2. UI: Swing skeleton
+
+3. API integration with swing skeleton
+
+4. UI styling
+
+** Material:
+- https://developer.microsoft.com/en-us/graph/graph-explorer
+
+** ToDO:
+
+- what are APIs?
+- how do APIs work?
+- how to use APIs in Java?
+(- how to use Microsoft Teams API?)
