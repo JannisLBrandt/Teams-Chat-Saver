@@ -1,0 +1,15 @@
+{
+  "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#chats('19:devteam-2025@thread.v2')/members",
+  "value": [
+    { "displayName": "Alex Johnson", "email": "alex.johnson@contoso.com", "userId": "u1-alex" },
+    { "displayName": "Priya Patel", "email": "priya.patel@contoso.com", "userId": "u2-priya" },
+    { "displayName": "Mateo García", "email": "mateo.garcia@contoso.com", "userId": "u3-mateo" },
+    { "displayName": "Sofia Rossi", "email": "sofia.rossi@contoso.com", "userId": "u4-sofia" },
+    { "displayName": "Liam O'Connor", "email": "liam.oconnor@contoso.com", "userId": "u5-liam" },
+    { "displayName": "Aisha Khan", "email": "aisha.khan@contoso.com", "userId": "u6-aisha" },
+    { "displayName": "David Smith", "email": "david.smith@contoso.com", "userId": "u7-david" },
+    { "displayName": "Yuki Tanaka", "email": "yuki.tanaka@contoso.com", "userId": "u8-yuki" },
+    { "displayName": "Chen Wei", "email": "chen.wei@contoso.com", "userId": "u9-chen" },
+    { "displayName": "Emma Müller", "email": "emma.muller@contoso.com", "userId": "u10-emma" }
+  ]
+}

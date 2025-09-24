@@ -1,0 +1,16 @@
+{
+    "request": {
+	"method": "GET",
+	"url": "/data"
+    },
+    "response": {
+	"status": 200,
+	"jsonBody": {
+	    "ChatID": 1,
+	    "ChatName": "Testing"
+	},
+	"headers": {
+	    "Content-Type": "application/json"
+	}
+    }
+}

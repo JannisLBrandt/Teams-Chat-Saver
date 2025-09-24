@@ -19,6 +19,7 @@ repositories {
 dependencies {
     // This dependency is used by the application.
     implementation libs.guava
+    implementation "org.wiremock:wiremock:3.+"
 }
 
 testing {
@@ -49,4 +50,9 @@ tasks.withType(JavaCompile).configureEach {
 
 tasks.withType(Test).configureEach {
   systemProperty 'file.encoding', 'UTF-8'
+}
+
+tasks.register("runMockServer", JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = "net.eclearing.server.MockDataServer"
 }

@@ -1,0 +1,13 @@
+{
+    "request": {
+	"method": "GET",
+	"url": "/hello"
+    },
+    "response": {
+	"status": 200,
+	"body": "Hello from Jannis, Alex and Benjamin!",
+	"headers": {
+	    "Content-Type": "text/plain"
+	}
+    }
+}
