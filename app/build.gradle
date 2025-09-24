@@ -41,7 +41,7 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = 'net.eclearing.App'
+    mainClass = 'net.eclearing.ui.App'
 }
 
 tasks.withType(JavaCompile).configureEach {
