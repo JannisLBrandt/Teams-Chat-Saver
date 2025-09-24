@@ -1,0 +1,13 @@
+{
+    "request": {
+	"method": "GET",
+	"url": "/v1.0/chats/19:devteam-2025@thread.v2/messages"
+    },
+    "response": {
+	"status": 200,
+	"headers": {
+	    "Content-Type": "application/json"
+	},
+	"bodyFileName": "messages.json"
+    }
+}
