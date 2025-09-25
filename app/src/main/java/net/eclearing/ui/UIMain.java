@@ -1,5 +1,7 @@
 package net.eclearing.ui;
 
+import net.eclearing.controller.ChatController;
+import net.eclearing.services.ChatApi;
 import org.w3c.dom.Text;
 
 import javax.swing.*;
@@ -18,7 +20,7 @@ public class UIMain extends JPanel implements ActionListener {
 
     ImageIcon searchIco = new ImageIcon("app/Icons/searchIco.png");
 
-    UIMain() { //Create, position and add UI Elements
+    public UIMain() { //Create, position and add UI Elements
         //Grid stuff for all components
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -94,6 +96,9 @@ public class UIMain extends JPanel implements ActionListener {
         switch (e.getActionCommand()){
             case "Find":
                 String uInput = inputField.getText();
+                ChatApi api = new ChatApi(uInput);
+                ChatController controller = new ChatController(api);
+                controller.placeHolder(uInput);
 
                 //CALL METHOD FOR FINDING A CHAT HERE
             case "Export":
@@ -120,6 +125,13 @@ public class UIMain extends JPanel implements ActionListener {
 
     public static JTextField getInputField() {
         return inputField;
+    }
+
+    public static void updateUI(String date, String user, String message){
+        viewField.append("(" + date + ") " + user + ": " + message + "\n");
+    }
+    public static void badLink(String link, String errorMessage) {
+        viewField.setText("An error has occured: " + errorMessage + " (" + link + ")");
     }
 
     /*FOR TESTING
