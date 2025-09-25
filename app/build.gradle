@@ -20,6 +20,8 @@ dependencies {
     // This dependency is used by the application.
     implementation libs.guava
     implementation "org.wiremock:wiremock:3.+"
+    implementation 'com.google.code.gson:gson:2.13.2'  //zum json verarbeiten
+
 }
 
 testing {
