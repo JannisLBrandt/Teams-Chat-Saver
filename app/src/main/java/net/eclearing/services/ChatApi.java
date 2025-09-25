@@ -17,32 +17,39 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 public class ChatApi {
 
-        public static void main(String[] args) throws IOException, InterruptedException {
-            getAllMsg("http://localhost:8181/v1.0/chats/19:devteam-2025@thread.v2/messages");
+    //was static und was nicht?
+    //kontextabhänig, funktionen die http aus führen oder daten aus uri liefern non-static
+    //functionen die nur JSON verarbeiten speichern kleinen zustand und hängen nicht von http ab. static
+
+    private final String baseUri;
+    private final HttpClient client;
+
+        public ChatApi(String pBaseUri){
+            this.baseUri = pBaseUri;
+            this.client = HttpClient.newHttpClient();
         }
+
+
 //########################################################################################################################################################################################################################################
 //############################ erstmal http request verarbeiten ##########################################################################################################################################################################
 //########################################################################################################################################################################################################################################
 
         //return "the hole site/URI"
-        public static HttpResponse getResponse(String pURI) throws IOException, InterruptedException {
-            HttpClient client = HttpClient.newHttpClient();
-
+        public HttpResponse getResponse() throws IOException, InterruptedException {
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("http://localhost:8181/v1.0/chats/19:devteam-2025@thread.v2/messages"))  //das sollte im optimal fall dynamisch sein, wir haben aber keine passenden daten gklaueb ich
+                    .uri(URI.create(baseUri))  //das sollte im optimal fall dynamisch sein, wir haben aber keine passenden daten gklaueb ich
                     .GET()
                     .build();
 
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            return response;
+            return client.send(request, HttpResponse.BodyHandlers.ofString());
 
         }
 
-        public static String getResponseBody(String pURI) throws IOException, InterruptedException {
+        public String getResponseBody() throws IOException, InterruptedException {
             HttpClient client = HttpClient.newHttpClient();
 
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("http://localhost:8181/v1.0/chats/19:devteam-2025@thread.v2/messages"))  //das sollte im optimal fall dynamisch sein, wir haben aber keine passenden daten gklaueb ich
+                    .uri(URI.create(baseUri))  //das sollte im optimal fall dynamisch sein, wir haben aber keine passenden daten gklaueb ich
                     .GET()
                     .build();
 
@@ -60,20 +67,17 @@ noch alles static, kann man aber ändern
  */
 
         //converts the HTTP request to Json Object
-        public static JsonObject responseToJsonObject(String pURI) throws IOException, InterruptedException {
-            String responseBody = getResponseBody(pURI);
-
+        public JsonObject responseToJsonObject() throws IOException, InterruptedException {
+            String responseBody = getResponseBody();
             JsonElement root = JsonParser.parseString(responseBody);
-            JsonObject rootObj = root.getAsJsonObject();
-
-            return rootObj;
+            return root.getAsJsonObject();
         }
 
 
         //so wie unsere daten strukturiert sind, gibt es hinter "value" im JSON die einzelnen daten. solange sich an der struktur nicht änder sollte das so passen
-        public static JsonArray getMessagesAsArraay(String pURI) throws IOException, InterruptedException {
-            JsonArray messages = responseToJsonObject(pURI).getAsJsonArray("value"); //"value", da hier die nachrichten liegen
-            return  messages; //jetzt hat man einen Array in denen die nachrichten als JSON gespeichert sind
+        public JsonArray getMessagesAsArray() throws IOException, InterruptedException {
+            //"value", da hier die nachrichten liegen
+            return responseToJsonObject().getAsJsonArray("value"); //jetzt hat man einen Array in denen die nachrichten als JSON gespeichert sind
         }
 
 
@@ -141,9 +145,9 @@ noch alles static, kann man aber ändern
 
 
         //soll den text einer nachricht ausgeben, ohne zusätzliche infos
-        public static void getAllMsg(String pURI) throws IOException, InterruptedException {
+        public void getAllMsg() throws IOException, InterruptedException {
 
-            JsonArray messages = getMessagesAsArraay(pURI);
+            JsonArray messages = getMessagesAsArray();
             System.out.println("###messages###:"+messages);
 
 
@@ -182,3 +186,21 @@ noch alles static, kann man aber ändern
         }
     }
 
+/*
+beispiel use:
+
+ChatApi chatApi = new ChatApi("http://localhost:8181/v1.0/chats/19:devteam-2025@thread.v2/messages");
+
+try {
+    JsonArray messages = chatApi.getMessagesAsArray();
+    for (JsonElement e : messages) {
+        JsonObject msg = ChatApi.convertJsonElementToJsonObject(e);
+        String sender = ChatApi.getSenderName(msg);
+        String content = ChatApi.getContent(msg);
+
+        System.out.println(sender + ": " + content);//oder fülle label oder so
+    }
+} catch (IOException | InterruptedException ex) {
+    ex.printStackTrace();
+}
+ */
