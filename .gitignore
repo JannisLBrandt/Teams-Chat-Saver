@@ -30,3 +30,4 @@ Thumbs.db
 # IDE
 .project 
 .settings/
+.idea/
