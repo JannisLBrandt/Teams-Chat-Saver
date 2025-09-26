@@ -1,5 +1,9 @@
 package net.eclearing.ui;
 
+import net.eclearing.controller.ChatController;
+import net.eclearing.services.ChatApi;
+import org.w3c.dom.Text;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,13 +14,13 @@ public class UIMain extends JPanel implements ActionListener {
     static CustomButton searchButton;
     static CustomButton exportButton;
     static CustomButton unusedButton;
-    static JEditorPane viewField;
+    static JTextArea viewField;
     Color componentBG = new Color(0x9898B8);
     Color componentBorder = new Color(0x5C5C70);
 
     ImageIcon searchIco = new ImageIcon("app/Icons/searchIco.png");
 
-    UIMain() { //Create, position and add UI Elements
+    public UIMain() { //Create, position and add UI Elements
         //Grid stuff for all components
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -44,24 +48,26 @@ public class UIMain extends JPanel implements ActionListener {
         unusedButton.setPreferredSize(new Dimension(80,20));
 
         //Make preview field
-        viewField = new JEditorPane();
+        viewField = new JTextArea();
         viewField.setEditable(false);
         viewField.setBorder(BorderFactory.createLineBorder(componentBorder, 2));
-        viewField.setText("Chat Preview will appear here");
-        viewField.setPreferredSize(new Dimension(690,390));
+        viewField.setText("Chat Preview \n");
+        //viewField.setPreferredSize(new Dimension(690,390));
         viewField.setBackground(componentBG);
 
+        JScrollPane scrollPane = new JScrollPane(viewField);
+        scrollPane.setPreferredSize(new Dimension(690,390));
 
+        //assign action listeners and commands
         searchButton.addActionListener(this);
         exportButton.addActionListener(this);
         unusedButton.addActionListener(this);
-
 
         searchButton.setActionCommand("Find");
         exportButton.setActionCommand("Export");
         unusedButton.setActionCommand("Placeholder");
 
-
+        //Change layout of the ui components (probably the worst layout making ever cause GridBagLayout is weird idk)
         gbc.anchor = GridBagConstraints.FIRST_LINE_START;
         add(inputField,gbc);
 
@@ -82,7 +88,7 @@ public class UIMain extends JPanel implements ActionListener {
         gbc.gridy++;
         gbc.insets = new Insets(10,0,10,0);
         gbc.gridwidth = 2;
-        add(viewField, gbc);
+        add(scrollPane, gbc);
 
     }
 
@@ -90,6 +96,10 @@ public class UIMain extends JPanel implements ActionListener {
         switch (e.getActionCommand()){
             case "Find":
                 String uInput = inputField.getText();
+                ChatApi api = new ChatApi(uInput);
+                ChatController controller = new ChatController(api);
+                controller.placeHolder(uInput);
+
                 //CALL METHOD FOR FINDING A CHAT HERE
             case "Export":
                 //CALL METHOD FOR EXPORTING HERE
@@ -97,6 +107,7 @@ public class UIMain extends JPanel implements ActionListener {
         }
     }
 
+    //Do all the things to make the ui appear and work idk
     public static void createUI() {
         JFrame window = new JFrame("Michaelsoft Teams Exporter");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -116,5 +127,14 @@ public class UIMain extends JPanel implements ActionListener {
         return inputField;
     }
 
+    public static void updateUI(String date, String user, String message){
+        viewField.append("(" + date + ") " + user + ": " + message + "\n");
+    }
+    public static void badLink(String link, String errorMessage) {
+        viewField.setText("An error has occured: " + errorMessage + " (" + link + ")");
+    }
+
+    /*FOR TESTING
     public static void main(String[] args) {createUI();}
+     */
 }
