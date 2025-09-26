@@ -1,34 +1,39 @@
 package net.eclearing.controller;
 
-import net.eclearing.services.ChatApi;
-import java.net.URI;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import net.eclearing.domain.Chat;
+import net.eclearing.domain.Message;
+
+import net.eclearing.services.ChatService;
 import net.eclearing.ui.UIMain;
 
 import java.io.IOException;
 
 public class ChatController {
 
-    public ChatApi chatApi;
+    public ChatService chatService;
 
-    public ChatController() {}
+    public UIMain uiMain;
 
-    public ChatController(ChatApi chatApi) {
-	this.chatApi = chatApi;
+    //public ChatController() {}
+
+    //ich glaube man sollte hier einen link übergeben
+    public ChatController(String pUri) throws IOException, InterruptedException {
+	this.chatService = new ChatService(pUri);
     }
 
+    //was soll das genau machen??
     public void placeHolder(String link) {
 
         try {
-            JsonArray messages = this.chatApi.getMessagesAsArray();
-                for (JsonElement e : messages) {
-                    JsonObject msg = ChatApi.convertJsonElementToJsonObject(e);
-                    String date = ChatApi.getCreatedDateTime(msg);
-                    String sender = ChatApi.getSenderName(msg);
-                    String content = ChatApi.getContent(msg);
-                    UIMain.updateUI(date, sender, content);
+            Chat messages = chatService.getChat();
+                for (Message m : messages.getMessages()) {
+                    if (!(m instanceof  Message)){
+                        System.out.println("keien Nachricht, irgendwas ist schiefgelaufen");
+                        break;
+                    }
+                    String sender = m.getSenderName();
+                    String content = m.getContent();
+                    uiMain.updateUI("", sender, content);
                     System.out.println(sender + ": " + content);//oder fülle label oder so
                 }
         } catch (IOException | InterruptedException ex) {
@@ -36,4 +41,16 @@ public class ChatController {
         }
     }
 
+
+
+
+
+
+
+
+
+
+
 }
+
+
