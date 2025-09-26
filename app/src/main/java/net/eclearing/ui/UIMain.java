@@ -1,13 +1,12 @@
 package net.eclearing.ui;
 
 import net.eclearing.controller.ChatController;
-import net.eclearing.services.ChatApi;
-import org.w3c.dom.Text;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class UIMain extends JPanel implements ActionListener {
     static JTextField inputField;
@@ -95,9 +94,15 @@ public class UIMain extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e){
         switch (e.getActionCommand()){
             case "Find":
-                String uInput = inputField.getText();
-                ChatApi api = new ChatApi(uInput);
-                ChatController controller = new ChatController(api);
+                String uInput = inputField.getText();  //was ist uInput? das feld wo der link eingefügt wird?
+                ChatController controller = null;
+                try {
+                    controller = new ChatController(uInput);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
                 controller.placeHolder(uInput);
 
                 //CALL METHOD FOR FINDING A CHAT HERE
