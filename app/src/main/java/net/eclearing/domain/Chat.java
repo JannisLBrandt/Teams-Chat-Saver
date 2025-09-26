@@ -6,15 +6,7 @@ public class Chat {
     private String content;
 
     Chat() {}
-    Chat(String date) {
-	this.date = date;
-    }
-    Chat(String sender) {
-	this.sender = sender;
-    }
-    Chat(String content) {
-	this.content = content;
-    }
+    
     Chat(String date, String sender, String content) {
 	this.date = date;
 	this.sender = sender;
