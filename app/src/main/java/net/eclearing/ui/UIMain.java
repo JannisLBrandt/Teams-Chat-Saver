@@ -1,12 +1,12 @@
 package net.eclearing.ui;
 
 import net.eclearing.controller.ChatController;
-import net.eclearing.services.ChatApi;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class UIMain extends JPanel implements ActionListener {
     static JTextField inputField;
@@ -105,8 +105,14 @@ public class UIMain extends JPanel implements ActionListener {
         switch (e.getActionCommand()){
             case "Find":
                 String uInput = inputField.getText();
-                ChatApi api = new ChatApi(uInput);
-                ChatController controller = new ChatController(api);
+                ChatController controller = null;
+                try {
+                    controller = new ChatController(uInput);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
                 controller.placeHolder(uInput);
 
                 //CALL METHOD FOR FINDING A CHAT HERE
