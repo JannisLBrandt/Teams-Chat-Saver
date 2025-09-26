@@ -1,19 +1,22 @@
 package net.eclearing.ui;
 
 import net.eclearing.controller.ChatController;
+import net.eclearing.services.ChatApi;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 public class UIMain extends JPanel implements ActionListener {
     static JTextField inputField;
     static CustomButton searchButton;
     static CustomButton exportButton;
-    static CustomButton unusedButton;
+    static CustomButton clearButton;
+    static CustomButton darkModeButton;
     static JTextArea viewField;
+    static boolean dmActive = false;
+    Color componentDarkBG = new Color(0x141420);
     Color componentBG = new Color(0x9898B8);
     Color componentBorder = new Color(0x5C5C70);
 
@@ -43,9 +46,11 @@ public class UIMain extends JPanel implements ActionListener {
         exportButton = new CustomButton("Export");
         exportButton.setPreferredSize(new Dimension(80,20));
 
-        unusedButton = new CustomButton("Placeholder");
-        unusedButton.setPreferredSize(new Dimension(80,20));
+        clearButton = new CustomButton("Clear");
+        clearButton.setPreferredSize(new Dimension(80,20));
 
+        darkModeButton = new CustomButton("Dark Mode");
+        darkModeButton.setPreferredSize(new Dimension(100,20));
         //Make preview field
         viewField = new JTextArea();
         viewField.setEditable(false);
@@ -60,11 +65,13 @@ public class UIMain extends JPanel implements ActionListener {
         //assign action listeners and commands
         searchButton.addActionListener(this);
         exportButton.addActionListener(this);
-        unusedButton.addActionListener(this);
+        clearButton.addActionListener(this);
+        darkModeButton.addActionListener(this);
 
         searchButton.setActionCommand("Find");
         exportButton.setActionCommand("Export");
-        unusedButton.setActionCommand("Placeholder");
+        clearButton.setActionCommand("Clear");
+        darkModeButton.setActionCommand("ToggleDM");
 
         //Change layout of the ui components (probably the worst layout making ever cause GridBagLayout is weird idk)
         gbc.anchor = GridBagConstraints.FIRST_LINE_START;
@@ -80,7 +87,10 @@ public class UIMain extends JPanel implements ActionListener {
         add(exportButton,gbc);
 
         gbc.insets = new Insets(2,85,2,85);
-        add(unusedButton,gbc);
+        add(clearButton,gbc);
+
+        gbc.insets = new Insets(2,168,2,168);
+        add(darkModeButton,gbc);
 
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.gridx = 0;
@@ -94,21 +104,30 @@ public class UIMain extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e){
         switch (e.getActionCommand()){
             case "Find":
-                String uInput = inputField.getText();  //was ist uInput? das feld wo der link eingefügt wird?
-                ChatController controller = null;
-                try {
-                    controller = new ChatController(uInput);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                } catch (InterruptedException ex) {
-                    throw new RuntimeException(ex);
-                }
+                String uInput = inputField.getText();
+                ChatApi api = new ChatApi(uInput);
+                ChatController controller = new ChatController(api);
                 controller.placeHolder(uInput);
 
                 //CALL METHOD FOR FINDING A CHAT HERE
             case "Export":
                 //CALL METHOD FOR EXPORTING HERE
                 break;
+            case "Clear":
+                viewField.setText("");
+                break;
+            case "ToggleDM":
+                if (!dmActive){
+                    dmActive = true;
+                    viewField.setBackground(componentDarkBG);
+                    viewField.setForeground(Color.WHITE);
+                    darkModeButton.setText("Light Mode");
+                }else {
+                    dmActive = false;
+                    viewField.setBackground(componentBG);
+                    viewField.setForeground(Color.BLACK);
+                    darkModeButton.setText("Dark Mode");
+                }
         }
     }
 
@@ -125,6 +144,7 @@ public class UIMain extends JPanel implements ActionListener {
         window.setVisible(true);
         window.setSize(750,520);
         window.setResizable(false);
+        window.setIconImage(new ImageIcon("app/Icons/appIco.png").getImage());
 
     }
 
