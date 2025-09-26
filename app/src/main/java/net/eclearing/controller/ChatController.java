@@ -13,8 +13,6 @@ public class ChatController {
 
     public ChatApi chatApi;
 
-    public UIMain uiMain;
-
     public ChatController() {}
 
     public ChatController(ChatApi chatApi) {
@@ -27,9 +25,10 @@ public class ChatController {
             JsonArray messages = this.chatApi.getMessagesAsArray();
                 for (JsonElement e : messages) {
                     JsonObject msg = ChatApi.convertJsonElementToJsonObject(e);
+                    String date = ChatApi.getCreatedDateTime(msg);
                     String sender = ChatApi.getSenderName(msg);
                     String content = ChatApi.getContent(msg);
-                    uiMain.updateUI("", sender, content);
+                    UIMain.updateUI(date, sender, content);
                     System.out.println(sender + ": " + content);//oder fülle label oder so
                 }
         } catch (IOException | InterruptedException ex) {
