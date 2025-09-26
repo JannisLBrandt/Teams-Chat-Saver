@@ -3,6 +3,7 @@ package net.eclearing.services;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import net.eclearing.domain.Chat;
 import net.eclearing.domain.Message;
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ public class ChatService {
         this.request = new ApiHttpRequest(uri);
     }
 
-    public Chat getMessages() throws IOException, InterruptedException {
+    public Chat getChat() throws IOException, InterruptedException {
         JsonArray messages = request.getMessagesAsArray();
         ArrayList<Message> messageList = new ArrayList<Message>();
 
@@ -37,7 +38,8 @@ public class ChatService {
             Message msg = new Message(msgId, msgDate, msgSenderId, msgSenderName, msgContentType, msgContent);
             messageList.add(msg);
         }
-        return messageList;
+
+        return new Chat(messageList);
     }
 
 }

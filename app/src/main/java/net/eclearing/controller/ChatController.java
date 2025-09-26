@@ -25,7 +25,7 @@ public class ChatController {
     public void placeHolder(String link) {
 
         try {
-            Chat messages = new Chat(chatService.getMessages());
+            Chat messages = chatService.getChat();
                 for (Message m : messages.getMessages()) {
                     if (!(m instanceof  Message)){
                         System.out.println("keien Nachricht, irgendwas ist schiefgelaufen");
