@@ -10,7 +10,8 @@ public class App {
 	UIMain.createUI();
 
 	CustomError error = new CustomError(CustomErrorType.HTTP_ERROR, "bad request!");
-	Errors.COLLECTOR.addError(error);
-	Errors.COLLECTOR.displayError();
-	}
+	CustomErrorCollector.addError(error);
+
+	CustomErrorCollector.displayErrors();
+    }
 }
