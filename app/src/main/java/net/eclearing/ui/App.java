@@ -13,6 +13,5 @@ public class App {
 	CustomErrorCollector.addError(error);
 
 	CustomErrorCollector.displayErrors();
-
     }
 }

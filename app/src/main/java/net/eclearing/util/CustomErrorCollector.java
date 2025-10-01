@@ -22,8 +22,6 @@ public class CustomErrorCollector {
     }
 
     public static void displayErrors() {
-	for (CustomError error : errorList) {
-	    System.out.println(error.toString());
-	}
+	errorList.forEach(System.out::println);
     }
 }
