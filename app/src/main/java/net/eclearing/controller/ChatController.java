@@ -4,6 +4,7 @@ import net.eclearing.domain.Chat;
 import net.eclearing.domain.Message;
 
 import net.eclearing.services.ChatService;
+import net.eclearing.services.ExportService;
 import net.eclearing.ui.UIMain;
 
 import java.io.IOException;
@@ -13,6 +14,8 @@ public class ChatController {
     public ChatService chatService;
 
     public UIMain uiMain;
+
+    public ExportService exportService;
 
     //public ChatController() {}
 
@@ -39,6 +42,16 @@ public class ChatController {
         } catch (IOException | InterruptedException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public void saveToFile(){
+        exportService = new ExportService();
+        try {
+            exportService.saveStringToFile( chatService.getChatJsonAsString(), chatService.getChatMessagesAsString());
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
 

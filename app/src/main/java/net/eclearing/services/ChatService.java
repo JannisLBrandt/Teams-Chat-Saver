@@ -42,4 +42,35 @@ public class ChatService {
         return new Chat(messageList);
     }
 
+    public String getChatMessagesAsString(){
+        try {
+            Chat messages = this.getChat();
+            String chat = "";
+            for (Message m : messages.getMessages()) {
+                if (!(m instanceof  Message)){
+                    System.out.println("keien Nachricht, irgendwas ist schiefgelaufen");
+                    break;
+                }
+                String sender = m.getSenderName();
+                String content = m.getContent();
+                chat =  chat +  "(" + m.getDate() + ") " + m.getSenderName()  + ": " + m.getContent() + "\n";
+
+
+            }
+            return chat;
+        } catch (IOException | InterruptedException ex) {
+            ex.printStackTrace();
+        }
+        return ""; // nicht elegant
+    }
+
+    public String getChatJsonAsString() throws IOException, InterruptedException {
+
+            String chat = request.getResponseBody();
+
+
+        return chat;
+
+    }
+
 }
