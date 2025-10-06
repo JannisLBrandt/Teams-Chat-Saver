@@ -13,7 +13,7 @@ public class ExportService {
     private int highNumber = 0;
 
     public ExportService() {
-        this.exportDirectory = Paths.get("src/exported_chats");
+        this.exportDirectory = Paths.get("app/exported_chats");
     }
 
     //(lege neues verzeichniss an)
