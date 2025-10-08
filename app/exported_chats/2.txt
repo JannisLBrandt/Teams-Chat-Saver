@@ -1,0 +1,23 @@
+{
+  "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#chats('19:devteam-2025@thread.v2')/messages",
+  "value": [
+    {
+      "id": "msg-1001",
+      "createdDateTime": "2025-09-24T09:00:00Z",
+      "from": { "user": { "id": "u1-alex", "displayName": "Alex Johnson" } },
+      "body": { "contentType": "html", "content": "Good morning team! Let’s kick off standup." }
+    },
+    {
+      "id": "msg-1002",
+      "createdDateTime": "2025-09-24T09:01:15Z",
+      "from": { "user": { "id": "u2-priya", "displayName": "Priya Patel" } },
+      "body": { "contentType": "html", "content": "Yesterday: finished API integration.<br>Today: writing tests.<br>Blockers: none." }
+    },
+    {
+      "id": "msg-1003",
+      "createdDateTime": "2025-09-24T09:02:10Z",
+      "from": { "user": { "id": "u3-mateo", "displayName": "Mateo García" } },
+      "body": { "contentType": "html", "content": "Waiting on <at id=\"0\">@Yuki Tanaka</at> for design assets." }
+    }
+  ]
+}

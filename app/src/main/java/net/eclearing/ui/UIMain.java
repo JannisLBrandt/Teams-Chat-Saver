@@ -117,7 +117,16 @@ public class UIMain extends JPanel implements ActionListener {
 
                 //CALL METHOD FOR FINDING A CHAT HERE
             case "Export":
-                //CALL METHOD FOR EXPORTING HERE
+                String uInputExport= inputField.getText();
+                ChatController controllerExport = null;
+                try {
+                    controller = new ChatController(uInputExport);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
+                controller.saveToFile();
                 break;
             case "Clear":
                 viewField.setText("");
